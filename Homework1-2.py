@@ -15,7 +15,6 @@ while True:
         if 1 <= int(n_str) <= 999:
             break
 n = int(n_str)
-
 n_100 = n//100 * 100
 n_10_all = n % 100
 n_10 = n_10_all//10 * 10
@@ -32,3 +31,4 @@ else:
         lst.append(n0_list[n_1])
 
 print(" ".join(lst))
+
