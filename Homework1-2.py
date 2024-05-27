@@ -16,18 +16,18 @@ while True:
             break
 n = int(n_str)
 
-n_100 = n - n % 100
-n_10 = n - n//100 * 100
-n_10_out = n_10//10 * 10
-n_1 = n_10 - n_10_out
+n_100 = n//100 * 100
+n_10_all = n % 100
+n_10 = n_10_all//10 * 10
+n_1 = n % 10
 
 if n_100 in n3_list:
     lst.append(n3_list[n_100])
-if n_10 in n1_list:
-    lst.append(n1_list[n_10])
+if n_10_all in n1_list:
+    lst.append(n1_list[n_10_all])
 else:
-    if n_10_out in n2_list:
-        lst.append(n2_list[n_10_out])
+    if n_10 in n2_list:
+        lst.append(n2_list[n_10])
     if n_1 in n0_list:
         lst.append(n0_list[n_1])
 
