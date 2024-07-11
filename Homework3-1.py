@@ -9,8 +9,9 @@ try:
             for line in f1.readlines():
                 words = line.split(':')
                 dictionary[words[0]] = words[1].rstrip()
-            for city in dictionary:
-                if int(dictionary[city]) > number:
-                    f2.write(city + ':' + dictionary[city] + '\n')
+            sorted_dictionary = dict(sorted(dictionary.items()))
+            for city in sorted_dictionary:
+                if int(sorted_dictionary[city]) > number:
+                    f2.write(city + ':' + sorted_dictionary[city] + '\n')
 except FileNotFoundError:
     print('Файл cities.txt не найден')
