@@ -1,3 +1,4 @@
+import random
 class Animal:
     def __init__(self, name, size, diet, habitat, lifespan, sex, satiety=100, age=0):
         self.name = name
@@ -69,24 +70,69 @@ class Ecosystem:
             print('Эти животные не могут размножаться')
 
     def simulate_time_step(self):
-        pass
+        new_animals = []
+        animals_to_remove = []
+        for animal in self.animals:
+            animal.age += 1
+            if animal.age >= animal.lifespan:
+                if animal.size == "Большой":
+                    self.increase_food(100)
+                elif animal.size == "Средний":
+                    self.increase_food(50)
+                else:
+                    self.increase_food(10)
+                continue
+
+            if animal.diet == "Растительная пища":
+                if self.plant_food > 0:
+                    self.plant_food -= 1
+                    animal.satiety += 26
+                else:
+                    animal.satiety -= 9
+            else:
+                if random.random() < 0.5:
+                    random_animal = random.choice(self.animals)
+                    if random_animal != animal and random_animal.habitat == animal.habitat:
+                        if random.random() < 0.5:
+                            animals_to_remove.append(random_animal)
+                            animal.satiety += 53
+                        else:
+                            animal.satiety -= 16
+                else:
+                    animal.satiety -= 9
+
+            if animal.satiety < 10:
+                if animal.size == "Большой":
+                    self.increase_food(100)
+                elif animal.size == "Средний":
+                    self.increase_food(50)
+                else:
+                    self.increase_food(10)
+            else:
+                new_animals.append(animal)
+
+        for animal in animals_to_remove:
+            if animal in self.animals:
+                self.animals.remove(animal)
+
+        self.animals = new_animals
 
 
 if __name__ == "__main__":
     ecosystem = Ecosystem()
     animals = [
-        Animal("Лев", "Крупный", "Мясоед", "Земля", 12, "м", 100, 11),
-        Animal("Лев", "Крупный", "Мясоед", "Земля", 12, "ж", 100, 11),
-        Animal("Орел", "Средний", "Плотоядный", "Воздух", 20, "м", 100, 3),
-        Animal("Орел", "Средний", "Плотоядный", "Воздух", 20, "ж", 100, 3),
+        Animal("Лев", "Большой", "Мясо", "Земля", 12, "м", 100, 11),
+        Animal("Лев", "Большой", "Мясо", "Земля", 12, "ж", 100, 11),
+        Animal("Орел", "Средний", "Мясо", "Воздух", 20, "м", 100, 3),
+        Animal("Орел", "Средний", "Мясо", "Воздух", 20, "ж", 100, 3),
         Animal("Золотая рыбка", "Маленький", "Растительная пища", "Вода", 10, "м"),
         Animal("Золотая рыбка", "Маленький", "Растительная пища", "Вода", 10, "ж"),
-        Animal("Слон", "Крупный", "Растительная пища", "Земля", 60, "м"),
-        Animal("Слон", "Крупный", "Растительная пища", "Земля", 60, "ж"),
-        Animal("Кит", "Огромный", "Планктоноед", "Вода", 90, "м"),
-        Animal("Кит", "Огромный", "Планктоноед", "Вода", 90, "ж"),
-        Animal("Волк", "Средний", "Мясоед", "Земля", 14, "м"),
-        Animal("Волк", "Средний", "Мясоед", "Земля", 14, "ж")
+        Animal("Слон", "Большой", "Растительная пища", "Земля", 60, "м"),
+        Animal("Слон", "Большой", "Растительная пища", "Земля", 60, "ж"),
+        Animal("Кит", "Большой", "Мясо", "Вода", 90, "м"),
+        Animal("Кит", "Большой", "Мясо", "Вода", 90, "ж"),
+        Animal("Волк", "Средний", "Мясо", "Земля", 14, "м"),
+        Animal("Волк", "Средний", "Мясо", "Земля", 14, "ж")
     ]
 
     for animal in animals:
