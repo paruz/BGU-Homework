@@ -167,7 +167,7 @@ if __name__ == "__main__":
         elif choice == '3':
             n = int(input('Введите номер особи: '))
             if 1 <= n <= len(ecosystem.animals):
-                print(f'\nЖивотное {str(n)}\n{ecosystem.animals[n+1]}')
+                print(f'\nЖивотное {str(n)}\n{ecosystem.animals[n-1]}')
             else:
                 print('Неверный номер')
 
